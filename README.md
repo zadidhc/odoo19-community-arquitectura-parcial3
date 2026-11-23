@@ -375,6 +375,47 @@ Nombre de la base utilizado en la práctica:
 
 `odoo_parcial3`
 
+<!-- INICIO ACLARACION BASE ODOO -->
+
+### Creacion de la base de datos desde cero
+
+Al abrir Odoo por primera vez, el navegador presenta un formulario para crear la base de datos de trabajo.
+
+**La base se crea manualmente desde la interfaz web de Odoo.** El script `preparar-odoo.ps1` solo descarga y verifica el codigo fuente oficial. Docker Compose inicia PostgreSQL y Odoo, pero no crea automaticamente la base de trabajo de la aplicacion.
+
+Para reproducir esta practica se recomienda completar los siguientes campos:
+
+| Campo | Configuracion recomendada |
+| --- | --- |
+| Master Password | Contrasena maestra segura para administrar bases de datos |
+| Database Name | `odoo_parcial3` |
+| Email | Correo del administrador de la nueva instancia |
+| Password | Contrasena del usuario administrador de Odoo |
+| Phone Number | Opcional, si el formulario lo permite |
+| Language | Espanol (America Latina), si esta disponible |
+| Country | Peru |
+| Demo Data | Opcional, para incluir datos de demostracion |
+
+**El nombre `odoo_parcial3` no es obligatorio.** Es el nombre usado en la practica original y se recomienda para que las consultas del README funcionen sin modificar sus ejemplos.
+
+Si se elige otro nombre, como `odoo_parcial3_prueba`, debera utilizarse ese mismo nombre en las consultas posteriores a PostgreSQL.
+
+Por ejemplo, sustituir:
+
+`-d odoo_parcial3`
+
+por:
+
+`-d odoo_parcial3_prueba`
+
+La contrasena maestra, la contrasena de PostgreSQL y la contrasena del administrador de Odoo son diferentes. Deben mantenerse privadas.
+
+Una instalacion nueva puede mostrar inicialmente la empresa `YourCompany`. Los productos ALN01 y CNJ01, las cotizaciones S00021 y S00022 y el diseno Boxed pertenecen a la demostracion original y no aparecen automaticamente.
+
+Despues de crear la base de datos, se debe ingresar a Aplicaciones e instalar Contactos y Ventas mediante el boton **Activar**.
+
+<!-- FIN ACLARACION BASE ODOO -->
+
 ### Contraseñas que deben distinguirse
 
 **Contraseña PostgreSQL**
