@@ -1,5 +1,50 @@
 # Implementación de Odoo 19 Community con Docker y PostgreSQL
 
+<!-- INICIO NOTA INSTALACION ODOO -->
+
+## Nota importante: primera instalacion y rendimiento
+
+La primera instalacion de Odoo 19 Community puede requerir tiempo, segun la velocidad de Internet y los recursos disponibles en el equipo. Esto debe distinguirse del tiempo que demora abrir Odoo una vez instalado.
+
+### Descarga y preparacion inicial
+
+1. **Clonacion del repositorio academico:** descarga los archivos Docker, el script de preparacion y la documentacion.
+2. **Ejecucion de `preparar-odoo.ps1`:** descarga el codigo fuente oficial de Odoo 19 desde GitHub. El repositorio contiene miles de archivos, por lo que la descarga puede avanzar lentamente sin que exista un error.
+3. **Construccion con `docker compose build odoo`:** prepara la imagen personalizada, instala las dependencias de Python e incorpora `wkhtmltopdf`.
+4. **Inicio con `docker compose up -d`:** inicia PostgreSQL y Odoo. Durante el primer arranque, los servicios pueden necesitar tiempo adicional antes de responder en el navegador.
+
+Se recomienda mantener Docker Desktop abierto y no interrumpir las operaciones mientras continuen mostrando actividad. Los siguientes arranques normalmente no requieren descargar nuevamente el codigo fuente ni reconstruir la imagen.
+
+### Optimizacion del rendimiento
+
+En la configuracion inicial, Odoo accedia al codigo fuente ubicado en Windows mediante un montaje de Docker:
+
+`./odoo:/opt/odoo:ro`
+
+Posteriormente se optimizo el despliegue incorporando el codigo fuente directamente a la imagen con la instruccion del Dockerfile:
+
+`COPY odoo/ /opt/odoo/`
+
+En la version final se retiro el montaje del codigo desde Windows. Con ello se evita el acceso continuo a los archivos del repositorio a traves de dicho montaje durante la ejecucion normal.
+
+Esta optimizacion busca mejorar los tiempos de respuesta. No elimina el tiempo necesario para descargar Odoo ni construir la imagen por primera vez, y el rendimiento depende de los recursos de cada equipo.
+
+### Resultado de una prueba de clonacion independiente
+
+Se realizo una prueba en una carpeta independiente, con puertos y volumenes Docker separados del proyecto original. Se comprobo lo siguiente:
+
+- Descarga correcta del repositorio academico y del commit previsto de Odoo 19.
+- Construccion correcta de la imagen personalizada.
+- PostgreSQL 16 en estado saludable.
+- `wkhtmltopdf 0.12.6.1 (with patched qt)` disponible dentro del contenedor.
+- Acceso web a la nueva instancia con respuesta HTTP 200.
+
+En esta prueba, la construccion de la imagen tardo aproximadamente 67 segundos y reutilizo capas de la cache de Docker (`CACHED`). Este tiempo no representa necesariamente una primera construccion en un equipo sin cache.
+
+**Alcance:** la clonacion crea una instalacion nueva. No restaura automaticamente la base de datos, los productos, las cotizaciones ni las configuraciones comerciales de demostracion. Estos procedimientos se describen en el informe.
+
+<!-- FIN NOTA INSTALACION ODOO -->
+
 **Universidad Nacional Agraria de la Selva (UNAS)**
 
 - **Facultad:** Ingeniería en Informática y Sistemas (FIIS)
