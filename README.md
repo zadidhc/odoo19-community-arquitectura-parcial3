@@ -593,19 +593,26 @@ documentos académicos que describen la práctica original.
 - Generación de PDF disponible mediante wkhtmltopdf.
 - Persistencia configurada mediante volúmenes Docker.
 
-### Comprobación pendiente
+### Prueba de clonación independiente realizada
 
-La instalación desde una clonación completamente nueva
-de este repositorio debe validarse por separado.
+El 23 de noviembre de 2026 se realizó una prueba de clonación en una carpeta independiente del mismo equipo, utilizando puertos, proyecto Docker y volúmenes distintos de los originales.
 
-Las instrucciones fueron preparadas para facilitar
-esa reproducción, pero no debe confundirse la
-validación de la instancia original con una prueba
-ya completada en una segunda computadora.
+La prueba utilizó el commit académico `0555a39` y verificó:
 
-La solución es académica y local; no representa
-una configuración de producción endurecida.
+- Clonación correcta del repositorio académico.
+- Descarga del código oficial de Odoo 19 y verificación del commit previsto.
+- Construcción correcta de la imagen Docker personalizada.
+- Inicio correcto de PostgreSQL 16, con estado `healthy`.
+- Disponibilidad de `wkhtmltopdf 0.12.6.1 (with patched qt)`.
+- Inicio de Odoo y respuesta web HTTP 200.
 
+La ejecución terminó con el mensaje `PRUEBA TECNICA SUPERADA`.
+
+**Alcance:** la prueba se realizó en el mismo equipo, pero con una instalación aislada. No constituye una verificación en una segunda computadora.
+
+**Pendiente:** probar el flujo comercial completo en la base nueva: crear la base de datos, instalar Contactos y Ventas, configurar la empresa, registrar productos, generar una cotización e imprimir su PDF.
+
+La solución es académica y local; no representa una configuración de producción endurecida.
 ## 16. Referencias
 
 - [Código fuente oficial de Odoo](https://github.com/odoo/odoo)
