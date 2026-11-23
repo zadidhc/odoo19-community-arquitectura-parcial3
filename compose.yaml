@@ -1,0 +1,44 @@
+name: odoo-parcial3
+
+services:
+  db:
+    image: postgres:16
+    ports:
+      - "127.0.0.1:5436:5432"
+    environment:
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: postgres
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U odoo -d postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 15
+
+  odoo:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:8070:8069"
+    volumes:
+      - odoo-data:/var/lib/odoo
+    working_dir: /opt/odoo
+    command:
+      - python
+      - odoo-bin
+      - --db_host=db
+      - --db_port=5432
+      - --db_user=odoo
+      - --db_password=${POSTGRES_PASSWORD}
+      - --http-interface=0.0.0.0
+      - --http-port=8069
+      - --data-dir=/var/lib/odoo
+
+volumes:
+  pgdata:
+  odoo-data:

@@ -1,0 +1,12 @@
+/.env
+/.env.*
+!/.env.example
+/odoo/
+/*.dump
+/*.sql
+/*.backup
+/pgdata/
+/odoo-data/
+__pycache__/
+*.pyc
+.vscode/
